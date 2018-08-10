@@ -1,0 +1,4 @@
+# Pycharm prj files
+.idea
+*.xml
+*.iml
