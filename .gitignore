@@ -1,4 +1,5 @@
 # Pycharm prj files
-.idea
+.idea/
 *.xml
 *.iml
+*.pyc

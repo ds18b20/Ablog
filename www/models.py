@@ -16,7 +16,10 @@ def next_id():
 
 
 class User(Model):
-    __table__ = 'users'
+    # 类的属性
+    # 只是为了提供这些attrs给元类，在元类内部转换成name到Field的映射关系，然后把这个关系保存在元类的__mapping__属性中
+    # 最终这些attrs会被pop掉，不然在实例中访问这些属性时，会默认找到class属性中的attr到Field的键值对，而不是希望的attr到value的键值对
+    __table__ = 'users'  # 映射到表名用的
 
     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
     email = StringField(ddl='varchar(50)')
@@ -54,11 +57,11 @@ class Comment(Model):
 
 async def test(loop):
     await create_pool(loop=loop, user='www-data', password='www-data', database='awesome')
-    u = User(name='Test', email='test@example.com', passwd='1234567890', image='about:blank')
+    u = User(name='Holmes', email='unique@example.com', passwd='116023', image='image')
     await u.save()
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(test(loop))
-    loop.run_forever()
+    # loop.run_forever()
 
