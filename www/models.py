@@ -57,7 +57,7 @@ class Comment(Model):
 
 async def test(loop):
     await create_pool(loop=loop, user='www-data', password='www-data', database='awesome')
-    u = User(name='Holmes', email='unique@example.com', passwd='116023', image='image')
+    u = User(name='Holmes', email='aaa@example.com', passwd='116023', image='image')
     await u.save()
 
 if __name__ == '__main__':
