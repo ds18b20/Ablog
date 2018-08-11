@@ -56,9 +56,23 @@ class Comment(Model):
 
 
 async def test(loop):
-    await create_pool(loop=loop, user='www-data', password='www-data', database='awesome')
-    u = User(name='Holmes', email='aaa@example.com', passwd='116023', image='image')
-    await u.save()
+    await create_pool(loop=loop, user='admin', password='admin', database='ablog')
+    user_1 = {
+        'name': 'Holmes',
+        'email'='Holmes@example.com',
+        'passwd'='aaaaaa',
+        'image'='image'
+    }
+    user_2 = {
+        'name': 'Wason',
+        'email'='Wason@example.com',
+        'passwd'='bbbbbb',
+        'image'='image'
+    }
+    u_1 = User(**user_1)
+    await u_1.save()
+    u_2 = User(**user_2)
+    await u_2.save()
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()

@@ -1,10 +1,10 @@
-drop database if exists awesome;
+drop database if exists ablog;
 
-create database awesome;
+create database ablog;
 
-use awesome;
+use ablog;
 
-grant select, insert, update, delete on awesome.* to 'www-data'@'localhost' identified by 'www-data';
+grant select, insert, update, delete on ablog.* to 'admin'@'localhost' identified by 'admin';
 
 create table users (
     `id` varchar(50) not null,
