@@ -59,15 +59,15 @@ async def test(loop):
     await create_pool(loop=loop, user='admin', password='admin', database='ablog')
     user_1 = {
         'name': 'Holmes',
-        'email'='Holmes@example.com',
-        'passwd'='aaaaaa',
-        'image'='image'
+        'email': 'Holmes@example.com',
+        'passwd': 'aaaaaa',
+        'image': 'image'
     }
     user_2 = {
         'name': 'Wason',
-        'email'='Wason@example.com',
-        'passwd'='bbbbbb',
-        'image'='image'
+        'email': 'Wason@example.com',
+        'passwd': 'bbbbbb',
+        'image': 'image'
     }
     u_1 = User(**user_1)
     await u_1.save()
