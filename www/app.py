@@ -5,9 +5,12 @@
 async web application.
 """
 
-import asyncio, os, json, time
-from datetime import datetime
+import asyncio
+import os
+import json
+import time
 
+from datetime import datetime
 from aiohttp import web
 from jinja2 import Environment, FileSystemLoader
 
@@ -118,7 +121,7 @@ async def init(loop):
     :param loop: 事件循环
     :return: web对象
     """
-    await orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='www', password='www', db='awesome')
+    await orm.create_pool(loop=loop, host='127.0.0.1', port=3306, user='root', password='root', database='ablog')
     app = web.Application(loop=loop, middlewares=[logger_factory, response_factory])
     init_jinja2(app, filters=dict(datetime=datetime_filter))
     add_routes(app, 'handlers')
