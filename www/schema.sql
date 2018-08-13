@@ -4,7 +4,7 @@ create database ablog;
 
 use ablog;
 
-grant select, insert, update, delete on ablog.* to 'admin'@'localhost' identified by 'admin';
+grant select, insert, update, delete on ablog.* to 'root'@'localhost' identified by 'root';
 
 create table users (
     `id` varchar(50) not null,

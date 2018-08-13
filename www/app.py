@@ -9,11 +9,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
-'''
-async web application.
-'''
-
-
 def index(request):
     """
     响应函数，根据request返回html代码
