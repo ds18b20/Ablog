@@ -12,7 +12,7 @@ configs = {
         'port': 3306,
         'user': 'root',
         'password': 'root',
-        'db': 'ablog'
+        'database': 'ablog'
     },
     'session': {
         'secret': 'ablog'
