@@ -1,4 +1,6 @@
-<<<<<<< HEAD
+# pyc file
+*.pyc
+
 # Pycharm prj files
 .idea/
 *.xml
