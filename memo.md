@@ -33,8 +33,39 @@ http://zccst.iteye.com/blog/1697043
 ## supervisor+gunicorn部署python web项目
 https://blog.csdn.net/qq_37049050/article/details/78500906
 
+## Fabric EC2 instance
+https://abhishek-tiwari.com/interacting-with-tagged-ec2-instances-using-fabric/
 
 ---
 # python中aiohttp request 的处理过程解析
 https://yq.aliyun.com/ziliao/25438
 http://blog.sina.com.cn/s/blog_6b665ba40102x4o3.html
+
+# Ngnix设置
+## error while attempting to bind on address ('127.0.0.1', 9000): address already in use
+https://stackoverflow.com/questions/19071512/socket-error-errno-48-address-already-in-use
+> $ ps -fA | grep python
+  501 81651 12648   0  9:53PM ttys000    0:00.16 python -m SimpleHTTPServer
+  
+> kill 81651
+
+## 502 Bad Gateway
+sudo /etc/init.d/nginx restart
+
+reference:
+http://otiai10.hatenablog.com/entry/2013/10/10/095213
+
+# Python locale error: unsupported locale setting
+Ubuntu下使用pip install安装包时，出现locale设置错误
+> export LC_ALL="en_US.UTF-8"
+> export LC_CTYPE="en_US.UTF-8"
+
+> sudo dpkg-reconfigure locales
+
+
+reference:
+
+https://stackoverflow.com/questions/14547631/python-locale-error-unsupported-locale-setting
+
+## How To Install MySQL on Ubuntu 16.04
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-16-04

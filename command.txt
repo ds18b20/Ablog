@@ -1,0 +1,39 @@
+# path
+cd /home/ubuntu/Ablog/www
+
+# run .py
+python3 app.py
+
+# show ports related to python
+ps -fA | grep python
+
+# reload ngnix setting
+nginx -s reload
+
+# restatrt nginx
+sudo /etc/init.d/nginx restart
+
+# nginx configure file
+/etc/nginx/ngnix.conf
+
+# nginx site setting path
+cd /etc/nginx/sites-available/
+cd /etc/nginx/sites-enabled/
+
+# ngnix syntax test
+sudo nginx -t
+
+    nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+    nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+# ngnix error log
+sudo tail -30 /var/log/nginx/error.log
+
+# Supervisor path
+/etc/supervisor/conf.d/
+
+
+stdout_logfile          = /srv/Ablog/log/app.log
+
+
+
