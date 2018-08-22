@@ -1,0 +1,4 @@
+vue console.error(("[Vue warn]: " + msg + trace));
+
+https://medium.com/@oneminutejs/the-entire-vue-js-source-code-line-by-line-11-the-warn-function-1b242c2ad3a
+

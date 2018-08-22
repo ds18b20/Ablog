@@ -1,0 +1,2 @@
+https://www.piwheels.hostedpi.com/simple/
+https://www.lfd.uci.edu/~gohlke/pythonlibs/

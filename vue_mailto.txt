@@ -1,0 +1,2 @@
+:href="`mailto:${sol.email}`"
+:href="emailto:f + sol.email"

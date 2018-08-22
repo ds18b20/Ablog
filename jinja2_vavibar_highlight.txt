@@ -1,0 +1,3 @@
+http://jinja.pocoo.org/docs/2.10/tricks/
+
+class="active"
