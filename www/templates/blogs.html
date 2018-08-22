@@ -10,8 +10,10 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="uk-grid">
+    
     <div class="uk-width-medium-3-4">
+    <div>&nbsp;</div>
     {% for blog in blogs %}
         <article class="uk-article">
             <h2><a href="/blog/{{ blog.id }}">{{ blog.name }}</a></h2>
@@ -34,5 +36,5 @@
             </ul>
         </div>
     </div>
-
+</div>
 {% endblock %}
