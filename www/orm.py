@@ -265,16 +265,16 @@ class Model(dict, metaclass=ModelMetaclass):
         :return:
         """
         sql = [cls.__select__]  # sql语句存入一个列表中
-        if where:  # where条件
+        if where:  # 如果有where位置参数
             sql.append('where')
             sql.append(where)
-        if args is None:
+        if args is None:  # 如果有args位置参数
             args = []
-        orderBy = kw.get('orderBy', None)  # 排序条件
+        orderBy = kw.get('orderBy', None)  # 获取orderBy排序条件
         if orderBy:
             sql.append('order by')
             sql.append(orderBy)
-        limit = kw.get('limit', None)  # limit条件
+        limit = kw.get('limit', None)  # 获取limit条件
         if limit is not None:
             sql.append('limit')
             if isinstance(limit, int):

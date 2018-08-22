@@ -111,6 +111,7 @@ def has_request_arg(fn):
             raise ValueError('request parameter must be the last named parameter in function: %s%s' % (fn.__name__, str(sig)))
     return found
 
+
 # 需要继续复习理解！
 class RequestHandler(object):
     """
@@ -134,6 +135,7 @@ class RequestHandler(object):
                 ct = request.content_type.lower()
                 if ct.startswith('application/json'):
                     params = await request.json()
+                    logging.info("!!!params: "+str(params))
                     if not isinstance(params, dict):
                         return web.HTTPBadRequest('JSON body must be object.')
                     kw = params
@@ -167,8 +169,10 @@ class RequestHandler(object):
             kw['request'] = request
         # check required kw:
         if self._required_kw_args:
+            logging.info("_required_kw_args: " + str(self._required_kw_args))
+            logging.info("kw: " + str(kw))
             for name in self._required_kw_args:
-                if not name in kw:
+                if name not in kw:
                     return web.HTTPBadRequest('Missing argument: %s' % name)
         logging.info('call with args: %s' % str(kw))
         try:

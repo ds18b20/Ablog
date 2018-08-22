@@ -36,4 +36,6 @@ sudo tail -30 /var/log/nginx/error.log
 stdout_logfile          = /srv/Ablog/log/app.log
 
 
+# update mysql
+update users set admin=1 where name='admin';
 

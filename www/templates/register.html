@@ -1,67 +1,103 @@
-{% extends '__base__.html' %}
-
-{% block title %}注册{% endblock %}
-
-{% block beforehead %}
+{% extends '__base__.html' %} {% block title %}注册{% endblock %} {% block beforehead %}
 
 <script>
+    function validateEmail(email) {
+        var re = /^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$/;
+        return re.test(email.toLowerCase());
+    }
 
-function validateEmail(email) {
-    var re = /^[a-z0-9\.\-\_]+\@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+){1,4}$/;
-    return re.test(email.toLowerCase());
-}
-
-$(function () {
-    var vm = new Vue({
-        el: '#vm',
-        data: {
-            name: '',
-            email: '',
-            password1: '',
-            password2: ''
-        },
-        methods: {
-            submit: function (event) {
-                event.preventDefault();
-                var $form = $('#vm');
-                if (! this.name.trim()) {
-                    return $form.showFormError('请输入名字');
-                }
-                if (! validateEmail(this.email.trim().toLowerCase())) {
-                    return $form.showFormError('请输入正确的Email地址');
-                }
-                if (this.password1.length < 6) {
-                    return $form.showFormError('口令长度至少为6个字符');
-                }
-                if (this.password1 !== this.password2) {
-                    return $form.showFormError('两次输入的口令不一致');
-                }
-                var email = this.email.trim().toLowerCase();
-                $form.postJSON('/api/users', {
-                    name: this.name.trim(),
-                    email: email,
-                    passwd: CryptoJS.SHA1(email + ':' + this.password1).toString()
-                }, function (err, r) {
-                    if (err) {
-                        return $form.showFormError(err);
+    $(function() {
+        var vm = new Vue({
+            el: '#vm',
+            data: {
+                name: '',
+                email: '',
+                password1: '',
+                password2: '',
+                verification_code: '',
+                input_code: '',
+                message: '123',
+            },
+            created: function() {
+                this.createCode();
+            },
+            methods: {
+                submit: function(event) {
+                    event.preventDefault();
+                    var $form = $('#vm');
+                    if (!this.name.trim()) {
+                        return $form.showFormError('请输入名字');
                     }
-                    return location.assign('/');
-                });
+                    if (!validateEmail(this.email.trim().toLowerCase())) {
+                        return $form.showFormError('请输入正确的Email地址');
+                    }
+                    if (this.password1.length < 6) {
+                        return $form.showFormError('口令长度至少为6个字符');
+                    }
+                    if (this.password1 !== this.password2) {
+                        return $form.showFormError('两次输入的口令不一致');
+                    }
+                    var email = this.email.trim().toLowerCase();
+                    if (this.checkCode() === true) {
+                        $form.postJSON('/api/users', {
+                            name: this.name.trim(),
+                            email: email,
+                            password: CryptoJS.SHA1(email + ':' + this.password1).toString()
+                        }, function(err, r) {
+                            if (err) {
+                                return $form.showFormError(err);
+                            }
+                            return location.assign('/');
+                        });
+                    } else {
+                        this.password1 = '';
+                        this.password2 = '';
+                    }
+                },
+
+                // 图片验证码
+                createCode: function() {
+                    code = "";
+                    var codeLength = 4; //验证码的长度
+                    var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+                        'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //随机数
+                    //循环操作
+                    for (var i = 0; i < codeLength; i++) {
+                        var index = Math.floor(Math.random() * 36); //取得随机数的索引（0~35）
+                        code += random[index]; //根据索引取得随机数加到code上
+                    }
+                    this.verification_code = code; //把code值赋给验证码
+                },
+
+                // 失焦验证图和密码
+                checkCode: function() {
+                    var $form = $('#vm');
+                    this.verification_code.toUpperCase(); //取得输入的验证码并转化为大写
+                    if (this.verification_code == '') {
+                        alert('No input found!');
+                        return $form.showFormError('请输入验证码');
+                    } else if (this.input_code.toUpperCase() != this.verification_code) {
+                        //若输入的验证码与产生的验证码不一致时
+                        this.createCode(); //刷新验证码
+                        this.input_code = '';
+                        return $form.showFormError('验证码不正确');
+                    } else {
+                        //输入正确时
+                        this.message = '';
+                        return true;
+                    }
+                }
+
             }
-        }
+        });
+        $('#vm').show();
     });
-    $('#vm').show();
-});
-
 </script>
-
-{% endblock %}
-
-{% block content %}
-
-    <div class="uk-width-2-3">
+{% endblock %} {% block content %}
+<div class="uk-vertical-align uk-text-center uk-height-1-1">
+    <div class="uk-vertical-align-middle" style="width: 320px">
         <h1>欢迎注册！</h1>
-        <form id="vm" v-on="submit: submit" class="uk-form uk-form-stacked">
+        <form id="vm" v-on:submit="submit" class="uk-form uk-form-stacked uk-text-left">
             <div class="uk-alert uk-alert-danger uk-hidden"></div>
             <div class="uk-form-row">
                 <label class="uk-form-label">名字:</label>
@@ -86,11 +122,17 @@ $(function () {
                 <div class="uk-form-controls">
                     <input v-model="password2" type="password" maxlength="50" placeholder="重复口令" class="uk-width-1-1">
                 </div>
+
             </div>
             <div class="uk-form-row">
-                <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-user"></i> 注册</button>
+                <label class="uk-form-label">请输入验证码:</label>
+                <input v-model="input_code" type="text" maxlength="6" placeholder="请输入验证码" class="uk-width-1-4" v-on:blur="checkCode">
+                <input v-model="verification_code" type="button" id="code" v-on:click="createCode" class="uk-button uk-button-default" title="点击更换验证码">
+
+                <button type="submit" class="uk-button uk-button-primary" style="float: right;"><i class="uk-icon-user"></i> 注册</button>
+                <br>
             </div>
         </form>
     </div>
-
+</div>
 {% endblock %}

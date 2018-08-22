@@ -8,10 +8,13 @@ from orm import create_pool, Model, StringField, BooleanField, FloatField, TextF
 """
 Models for user, blog, comment.
 """
-# Reference: __author__ = 'Michael Liao'
 
 
 def next_id():
+    """
+    生成不重复的id
+    :return: id --> str
+    """
     return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
 
 
@@ -23,7 +26,7 @@ class User(Model):
 
     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
     email = StringField(ddl='varchar(50)')
-    passwd = StringField(ddl='varchar(50)')
+    password = StringField(ddl='varchar(50)')
     admin = BooleanField()
     name = StringField(ddl='varchar(50)')
     image = StringField(ddl='varchar(500)')
@@ -60,13 +63,13 @@ async def test(loop):
     user_1 = {
         'name': 'Holmes',
         'email': 'Holmes@example.com',
-        'passwd': 'aaaaaa',
+        'password': 'aaaaaa',
         'image': 'image'
     }
     user_2 = {
         'name': 'Wason',
         'email': 'Wason@example.com',
-        'passwd': 'bbbbbb',
+        'password': 'bbbbbb',
         'image': 'image'
     }
     u_1 = User(**user_1)
@@ -78,4 +81,3 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(test(loop))
     # loop.run_forever()
-
