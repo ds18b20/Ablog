@@ -8,7 +8,7 @@ python3 app.py
 ps -fA | grep python
 
 # reload ngnix setting
-nginx -s reload
+sudo nginx -s reload
 
 # restatrt nginx
 sudo /etc/init.d/nginx restart
@@ -38,4 +38,10 @@ stdout_logfile          = /srv/Ablog/log/app.log
 
 # update mysql
 update users set admin=1 where name='admin';
+
+# linux
+softlink & hardlink
+ln -s destfile/directory softlink
+ln destfile hardlink
+https://blog.csdn.net/yasaken/article/details/7292186
 
